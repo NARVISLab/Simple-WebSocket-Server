@@ -8,7 +8,7 @@
 #ifdef USE_STANDALONE_ASIO
 #include <asio/ssl.hpp>
 #else
-#include <boost/asio/ssl.hpp>
+#include <asio/ssl.hpp>
 #endif
 
 

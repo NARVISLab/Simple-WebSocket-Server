@@ -4,9 +4,9 @@
 #include "crypto.hpp"
 #include "utility.hpp"
 
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/asio.hpp>
-#include <boost/functional/hash.hpp>
+//#include <boost/algorithm/string/predicate.hpp>
+#include <asio.hpp>
+//#include <boost/functional/hash.hpp>
 
 #include <atomic>
 #include <iostream>
@@ -23,8 +23,8 @@ namespace SimpleWeb {
   namespace make_error_code = std;
 } // namespace SimpleWeb
 #else
-#include <boost/asio.hpp>
-#include <boost/asio/steady_timer.hpp>
+#include <asio.hpp>
+#include <asio/steady_timer.hpp>
 namespace SimpleWeb {
   namespace asio = boost::asio;
   using error_code = boost::system::error_code;

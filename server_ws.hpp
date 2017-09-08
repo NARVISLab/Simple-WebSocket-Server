@@ -11,6 +11,7 @@
 #include <mutex>
 #include <thread>
 #include <unordered_set>
+#include <map>
 
 #ifdef USE_STANDALONE_ASIO
 #include <asio.hpp>
@@ -19,8 +20,8 @@ namespace SimpleWeb {
   using error_code = std::error_code;
 } // namespace SimpleWeb
 #else
-#include <boost/asio.hpp>
-#include <boost/asio/steady_timer.hpp>
+#include <asio.hpp>
+#include <asio/steady_timer.hpp>
 namespace SimpleWeb {
   namespace asio = boost::asio;
   using error_code = boost::system::error_code;

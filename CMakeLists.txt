@@ -2,7 +2,6 @@ cmake_minimum_required (VERSION 2.8)
 project (Simple-WebSocket-Server)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -Wsign-conversion")
 
-set(BOOST_COMPONENTS system coroutine context thread)
 # Late 2017 TODO: remove the following checks and always use std::regex
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
@@ -10,8 +9,11 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_BOOST_REGEX")
     endif()
 endif()
-find_package(Boost 1.54.0 COMPONENTS ${BOOST_COMPONENTS} REQUIRED)
-include_directories(SYSTEM ${Boost_INCLUDE_DIR})
+
+# Asio Standalone
+include_directories(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../asio-1.10.6/include)
+list(APPEND ASIO_DEFS "-DASIO_STANDALONE" "-DUSE_STANDALONE_ASIO" "-DASIO_HAS_STD_ADDRESSOF" "-DASIO_HAS_STD_ARRAY" "-DASIO_HAS_CSTDINT" "-DASIO_HAS_STD_SHARED_PTR" "-DASIO_HAS_STD_TYPE_TRAITS" "-D_WIN32_WINNT=0x0501")
+add_definitions(${ASIO_DEFS})
 
 if(APPLE)
   set(OPENSSL_ROOT_DIR "/usr/local/opt/openssl")
@@ -26,12 +28,10 @@ find_package(Threads REQUIRED)
 include_directories(.)
 
 add_executable(ws_examples ws_examples.cpp)
-target_link_libraries(ws_examples ${Boost_LIBRARIES})
 target_link_libraries(ws_examples ${OPENSSL_CRYPTO_LIBRARY})
 target_link_libraries(ws_examples ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(wss_examples wss_examples.cpp)
-target_link_libraries(wss_examples ${Boost_LIBRARIES})
 target_link_libraries(wss_examples ${OPENSSL_LIBRARIES})
 target_link_libraries(wss_examples ${CMAKE_THREAD_LIBS_INIT})
 
